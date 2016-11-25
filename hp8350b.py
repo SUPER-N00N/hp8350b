@@ -16,7 +16,7 @@ class HP8350B:
 	
 	def cmd(self, cmd):
 		self.fd.write("++addr %d\n" %self.GPIB_ADDRESS)
-		self.fd.write(cmd + "\n");
+		self.fd.write(cmd + "\r\n");
 		result = []
 		c = 10
 		while c > 0:
@@ -33,8 +33,11 @@ class HP8350B:
 		return
 							
 	def frq_start(self, frq):
-		return self.cmd("FA" + frq);
+		return self.cmd("FA" + frq + "\r\n");
 	def frq_stop(self, frq):
-		return self.cmd("FZ" + frq);
-
+		return self.cmd("FB" + frq + "\r\n");
+	def dBm(self, dbm):
+		return self.cmd("PL" + dbm + "DM\r\n");
+	def setSweepTime(self, dbm):
+		return self.cmd("ST" + dbm + "MS\r\n");
 	
